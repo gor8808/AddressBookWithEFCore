@@ -1,0 +1,19 @@
+﻿@model List<Address>
+
+@{
+    Layout = "ShowAll";
+}
+@if (Model == null)
+{
+    <h1>There are no addresses please <a asp-action="Add">add</a></h1>
+}
+else
+{
+    <div class="row justify-content-md-center text-break">
+        @foreach (var address in Model)
+        {
+            @(await Html.PartialAsync("_AddressCubeItem", address))
+        }
+    </div>
+
+}

@@ -1,0 +1,59 @@
+﻿@model Address
+
+@{
+    ViewBag.Title = Model.FullName;
+    Layout = "_Layout";
+}
+
+<table class="table col-2-table">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>Full name</th>
+        <td>@Model.FullName</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>
+            <a href="mailto:@Model.Email">
+                @Model.Email
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>Phone number</th>
+        <td>
+            <a href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a>
+        </td>
+    </tr>
+    <tr>
+        <th>Physical address</th>
+        <td>@Model.PhysicalAddress</td>
+    </tr>
+    <tr>
+        <th>QR code</th>
+        <td>
+            <img class="w-100 qrCode" src="@ViewBag.QrCodeBase64Url" alt="@Model.FullName's contact qr code" />
+            <p>Click to zoom</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a class="btn btn-block btn-dark f-w" 
+   asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+<a class="btn btn-block btn-dark f-w" 
+   asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+
+
+<div id="qrModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01" alt="">
+    <div id="caption"></div>
+</div>
+@section Scripts
+{
+    <script src="~/js/ZoomImageOnClickScript.js"></script>
+}

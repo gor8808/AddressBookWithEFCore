@@ -1,0 +1,64 @@
+﻿@model SearchModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "_Layout";
+}
+<h2 class="text-center">
+    Detailed search
+</h2>
+<div class="block">
+    <fieldset>
+        <form asp-action="Search" method="post">
+            <div class="form-group f-left margin-right-5">
+                <label asp-for="Id">Id</label>
+                <input type="number" asp-for="Id" />
+            </div>
+            <div class="form-group f-left margin-right-5">
+                <label asp-for="FullName">Full name</label>
+                <input type="text" asp-for="FullName" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group f-left margin-right-5">
+                <label asp-for="Email">Email</label>
+                <input type="text" asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group margin-right-5">
+                <label asp-for="PhoneNumber">Phone number</label>
+                <input type="tel" asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group margin-right-5">
+                <label asp-for="PhysicalAddress">Physical address</label>
+                <input type="text" asp-for="PhysicalAddress" />
+                <span asp-validation-for="PhysicalAddress" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            <p class="text-center">The system makes a search by fields that are filled (if you don't want to include that field leave it empty)</p>
+        </form>
+    </fieldset>
+</div>
+
+
+<div>
+    @if (Model == null)
+    {
+        <h3 class="btn-primary card text-center">Search to view results</h3>
+    }
+    else if (Model.Result == null || Model.Result.Count == 0 || Model.Result.FirstOrDefault() == null)
+    {
+        <h3 class="btn-primary card text-center">No result found</h3>
+    }
+    else
+    {
+        <div class="row justify-content-md-center text-break">
+            @foreach (var address in Model.Result)
+            {
+                @(await Html.PartialAsync("_AddressCubeItem", address))
+            }
+        </div>
+    }
+
+</div>

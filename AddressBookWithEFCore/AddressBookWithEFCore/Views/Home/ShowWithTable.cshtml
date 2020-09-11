@@ -1,0 +1,83 @@
+﻿@model List<Address>
+
+@{
+    Layout = "ShowAll";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/b-1.6.3/b-colvis-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/datatables.min.css" />
+
+@if (Model == null)
+{
+    <h1>There are no addresses please <a asp-action="Add">add</a></h1>
+}
+else
+{
+    <table class="table" id="addresses">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Physical address</th>
+                <th scope="col">See more</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var address in Model)
+            {
+                <tr>
+                    <td scope="row">@address.Id</td>
+                    <td>@address.FullName</td>
+                    <td>
+                        <a href="mailto:@address.Email">
+                            @address.Email
+                        </a>
+                    </td>
+                    <td>
+                        <a href="tel:@address.PhoneNumber">@address.PhoneNumber</a>
+                    </td>
+                    <td>@address.PhysicalAddress</td>
+                    <td>
+                        <a asp-action="SingleAddressItem" asp-controller="Home" asp-route-id="@address.Id">
+                            <i class="fas fa-info"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Home" asp-route-id="@address.Id">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Home" asp-route-id="@address.Id">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div id="qrModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01" alt="">
+    <div id="caption"></div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.21/b-1.6.3/b-colvis-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/datatables.min.js"></script>
+    <script src="~/js/ZoomImageOnClickScript.js"></script>
+    <script>
+        $("#addresses").DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        } );
+    </script>
+}

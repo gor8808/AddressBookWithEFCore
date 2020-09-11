@@ -1,0 +1,17 @@
+﻿@model AddressBookWithEFCore.DataAccessLayer.Address
+
+<div class="cubeItem col-2">
+    <h1>@Model.FullName</h1>
+    <hr />
+    <h2>@Model.Email</h2>
+    <hr />
+    <a class="btn btn-primary display-block"
+       asp-action="SingleAddressItem" asp-controller="Home" asp-route-id="@Model.Id">See more</a>
+
+    <a asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Id">
+        <i class="fas fa-pen"></i>
+    </a>
+    <a asp-action="Delete" asp-controller="Home" asp-route-id="@Model.Id">
+        <i class="fas fa-trash"></i>
+    </a>
+</div>
